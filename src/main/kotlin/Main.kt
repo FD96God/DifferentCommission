@@ -1,8 +1,13 @@
 fun main() {
-    val card = "VK Pay"
-    val transfer = 10000
-    val sumTransfer = 30000
+    val card = "Maestro"
+    val transfer = 16000
+    val sumTransfer = 0
     println("Сумма перевода - $transfer")
+    sysOut(card, transfer, sumTransfer)
+
+}
+
+fun sysOut(card: String, transfer: Int, sumTransfer: Int) {
     if (transfer > 150000) {
         println("Сумма больше лимита 150000")
     } else {
@@ -39,15 +44,14 @@ fun main() {
     }
 }
 
-
-fun masterCard(transfer: Int, sumTransfer: Int): Double = when (sumTransfer) {
+fun masterCard(transfer: Int, sumTransfer: Int): Double = when (sumTransfer + transfer) {
     in 0..75_000 -> 0.0
     in 75_000..600_000 -> transfer / 100 * 0.6 + 20
     else -> -1.0
 }
 
 fun visa(transfer: Int, sumTransfer: Int): Double {
-    if (sumTransfer > 600000) {
+    if (sumTransfer + transfer > 600000) {
         return -1.0
     }
     val result: Double = transfer / 100 * 0.75
@@ -64,7 +68,7 @@ fun visa(transfer: Int, sumTransfer: Int): Double {
 
 fun vk(transfer: Int, sumTransfer: Int): Boolean {
     if (transfer < 15000) {
-        if (sumTransfer < 40000) {
+        if (sumTransfer + transfer < 40000) {
             return true
         }
     }
